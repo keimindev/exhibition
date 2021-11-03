@@ -24,7 +24,7 @@ for tr in trs:
             url = baseUrl + link_url
             price = '100,000'
             age = '전체관람가'
-            print(title, img_url, place, period, url)
+            print( title, img_url, place, period, url)
             doc = {
                 'title': title,
                 'img_url': img_url,
@@ -38,3 +38,4 @@ for tr in trs:
 
             db.exhibition.insert_one(doc)
             print('완료!', title)
+

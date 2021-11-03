@@ -10,8 +10,7 @@ db = client.dbsparta
 # 코딩 시작
 @app.route('/')
 def home():
-    exhibition = list(db.exhibition.find({}, {'_id':False}))
-
+    exhibition = list(db.exhibition.find({}))
     return render_template("index.html", exhibition=exhibition)
 
 
@@ -21,6 +20,10 @@ def home():
 #     exhibition = list(db.exhibition.find({}, {'_id':False}))
 #     return jsonify({'exhi_list': exhibition})
 
+@app.route('/detail/<keyword>')
+def detail(keyword):
+    contents = list(db.exhibition.find({}))
+    return render_template("detail.html", contents=contents, word=keyword)
 
 
 

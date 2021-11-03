@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
+
+    <style>
+        *{
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+        h1,
+        form{
+            text-align: center;
+            margin: 60px 0;
+            border: 0;
+            outline: none;
+        }
+        input{
+            border: 1px solid #888;
+            outline: none;
+            padding: 5px 10px;
+        }
+
+        button {
+            border: 0;
+            outline: none;
+            cursor: pointer;
+        }
+
+        #close-exhi {
+            width: 700px;
+            height: 200px;
+            margin: 50px auto;
+            overflow: hidden;
+        }
+
+        .close-exhi-inner{
+            width:800px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr)
+        }
+
+        #card-box{
+            width: 700px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr)
+        }
+
+
+    </style>
+        <script>
+
+            $(document).ready(function () {
+                filter();
+            })
+
+            //검색
+            function filter() {
+                let value = $('#value').val();
+                let listInner = document.getElementsByClassName("search-card");
+                console.log(listInner)
+                if (value == " ") {
+                    return window.location.href =`/`;
+                }
+
+                for (let i = 0; i < listInner.length; i++) {
+                    let title = listInner[i].getAttribute('id')
+                    if (title.indexOf(value) > -1) {
+                        console.log(value)
+                        console.log(listInner[i])
+                        console.log(title)
+                        listInner[i].style.display = 'flex';
+                    } else {
+                        listInner[i].style.display = 'none';
+                    }
+
+                    }
+                }
+
+
+
+
+
+            {#function showExhibition() {#}
+            {#    $.ajax({#}
+            {#        type: "GET",#}
+            {#        url: "/list?sample_give=샘플데이터",#}
+            {#        data: {},#}
+            {#        success: function (response) {#}
+            {#            let contents = response['exhi_list']#}
+            {#            console.log(contents)#}
+            {#            for(let i=0; i<contents.length; i++){#}
+            {#                let img = contents[i]['img_url']#}
+            {#                let url = contents[i]['url']#}
+            {#                let title = contents[i]['title']#}
+            {##}
+            {#                let temp=`<div class="card" id="${title}">#}
+            {#                            <a href="${url}">#}
+            {#                                <img class="card-img-top" src="${img}" alt="Card image cap">#}
+            {#                            </a>#}
+            {#                            </div>`;#}
+            {##}
+            {#                $('#card-box').append(temp)#}
+            {#            }#}
+            {#        }#}
+            {#    })#}
+            {#}#}
+
+        </script>
+
+</head>
+
+<body>
+
+    <h1>전시 뭐하니?</h1>
+    <div id="close-exhi">
+       <ul class="close-exhi-inner">
+        {% for exhi in exhibition %}
+          {% if exhi.period == "2021.10.10" %}
+            <li class="close-exhi-card card">
+                <a href="{{  exhi.url }}">
+                    <img class="card-img-top" src="{{ exhi.img_url }}" alt="Card imgae cap" />
+                </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+        </ul>
+    </div>
+
+
+    <form>
+        <input type="text" id="value" onkeyup="filter()" placeholder="전시회명을 검색해주세요" style="width:18rem" />
+    </form>
+    <div id="card-box">
+        {% for exhi in exhibition %}
+            <div class="card search-card" id="{{ exhi.title }}">
+                <a href="{{ exhi.url }}">
+                    <img class="card-img-top" src="{{ exhi.img_url }}" alt="Card image cap" />
+{#                    <p>{{ exhi.title }}</p>#}
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
